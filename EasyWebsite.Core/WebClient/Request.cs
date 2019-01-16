@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasyWebsite.Core
+namespace EasyWebsite.Core.WebClient
 {
-    public class Class1
+    internal class Request
     {
+
     }
 }
