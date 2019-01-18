@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using EasyWebsite.Core.WebClient;
+using EasyWebsite.Core.PageProcessor;
 
 namespace EasyWebsite.Core
 {
@@ -11,7 +13,7 @@ namespace EasyWebsite.Core
     {
         public Uri Domain { get;set; } 
 
-        protected string Cookies { get; set; }
+        protected ExCookieCollection Cookies { get; set; }
 
         private string _LoginUrl = null;
 
@@ -19,31 +21,39 @@ namespace EasyWebsite.Core
         {
             Domain = new Uri(domain);
         }
+        public Site( )
+        {
+        }
 
-        public void Login(string loginPath, object userObject)
+        public bool Login(string loginPath, object userObject)
         {
             string userJson = JsonConvert.SerializeObject(userObject);
-            Login(loginPath, userJson);
+            return Login(loginPath, userJson);
         }
 
         public bool Login(string loginPath,string userJson)
         {
             _LoginUrl = loginPath;
-            NetworkClient netCenter = new NetworkClient();
+            NetworkClient netCenter = new NetworkClient() { AllowAutoRedirect = false };
             var response = netCenter.PostResponse(loginPath, userJson);
-            if(response.ResponseType == WebClient.ResponseTypeEnum.Text)
+            if (response.Cookies.IsAspAuthenticate)
             {
+                this.Cookies = response.Cookies;
+                return true;
             }
+            return false;
         }
         
-        public void OpenPage(string url)
+        public void OpenPage(string url,IPageProcessor pageProcessor)
         {
+            NetworkClient netCenter = new NetworkClient() { AllowAutoRedirect = false };
+            var response = netCenter.GetResponse();
 
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

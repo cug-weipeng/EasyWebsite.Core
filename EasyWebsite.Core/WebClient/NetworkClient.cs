@@ -1,12 +1,8 @@
 ﻿using EasyWebsite.Core.WebClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyWebsite.Core
 {
@@ -36,7 +32,6 @@ namespace EasyWebsite.Core
             HttpClient httpClient = CreateHttpClient();
 
             HttpResponseMessage response = httpClient.PostAsync(url, httpContent).Result;
-
             return ConvertResponse(response);
         }
 
@@ -44,23 +39,29 @@ namespace EasyWebsite.Core
         {
             if (response.IsSuccessStatusCode)
             {
-                string result = response.Content.ReadAsStringAsync().Result;
-                return new Response(ResponseTypeEnum.Text, response);
+                return new Response(ResponseTypeEnum.Error, response.Content.ReadAsStreamAsync().GetAwaiter().GetResult(), response.Headers.GetCookieCollection());
             }
-            else if (response.IsRedirectCode())
-            {
-                return new Response(ResponseTypeEnum.Redirect, new Uri(response.RequestMessage.RequestUri, response.Headers.Location).ToString());
-            }
-            else
-            {
-                return new Response(ResponseTypeEnum.Error, response.StatusCode.ToString());
-            }
-        }
 
+            if (response.IsRedirectCode())
+            {
+                
+                return new Response(ResponseTypeEnum.Redirect, new Uri(response.RequestMessage.RequestUri, response.Headers.Location).ToString(), response.Headers.GetCookieCollection());
+            }
+
+            if(response.TryGetAttachmentName(out string fileName))
+            {
+                var result = new Response(ResponseTypeEnum.File, response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult(), response.Headers.GetCookieCollection());
+                result.DownLoadFileName = fileName;
+                return result;
+            }
+
+            return new Response(ResponseTypeEnum.Error, response.StatusCode.ToString(), response.Headers.GetCookieCollection());
+        }
+        
         private void SetSecurityProtocol(string url)
         {
             if (url.StartsWith("https"))
-                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
         }
 
         private HttpClient CreateHttpClient()
@@ -73,7 +74,7 @@ namespace EasyWebsite.Core
         private HttpContent CreatePostContent(string postData)
         {
             HttpContent httpContent = new StringContent(postData);
-            httpContent.Headers.ContentType = new MediaTypeHeaderValue(MEDIATYPE_FORM_URLENCODED);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue(MEDIATYPE_JSON);
             httpContent.Headers.ContentType.CharSet = "utf-8";
             return httpContent;
         }
