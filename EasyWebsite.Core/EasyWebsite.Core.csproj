@@ -46,14 +46,16 @@
   <ItemGroup>
     <Compile Include="PageProcessor\DownloadProcessor.cs" />
     <Compile Include="PageProcessor\IPageProcessor.cs" />
+    <Compile Include="PageProcessor\IWebRequester.cs" />
     <Compile Include="PageProcessor\PageProcessorBase.cs" />
     <Compile Include="WebClient\CookieExtension.cs" />
     <Compile Include="WebClient\ExCookieCollection.cs" />
     <Compile Include="WebClient\HttpExtention.cs" />
-    <Compile Include="WebClient\NetworkClient.cs" />
+    <Compile Include="WebClient\HttpRequestClient.cs" />
     <Compile Include="Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebClient\Request.cs" />
+    <Compile Include="WebClient\RequestCommon.cs" />
     <Compile Include="WebClient\Response.cs" />
   </ItemGroup>
   <ItemGroup>

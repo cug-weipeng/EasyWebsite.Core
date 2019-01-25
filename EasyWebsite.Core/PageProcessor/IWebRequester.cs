@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace EasyWebsite.Core.PageProcessor
 {
-    public interface IPageProcessor
+    public interface IWebRequester
     {
-        void Process();
+        Response Send(Request request);
+        Response SendAsync(Request request);
     }
 }

@@ -12,24 +12,24 @@ namespace EasyWebsite.Core.PageProcessor
     /// <summary>
     /// 用于下载的页面处理器，可下载小文件和http页面等
     /// </summary>
-    public class DownloadProcessor : PageProcessorBase
+    public abstract class DownloadRequesterBase : IWebRequester
     {
         public string StoragePath { get; set; }
         public DownloadOptions Options { get; set; }
 
-        public DownloadProcessor(string storagePath)
+        public DownloadRequesterBase(string storagePath)
         {
             StoragePath = storagePath;
             Options = new DownloadOptions();
         }
 
-        public DownloadProcessor(string storagePath, DownloadOptions options)
+        public DownloadRequesterBase(string storagePath, DownloadOptions options)
         {
             StoragePath = storagePath;
             Options = options;
         }
 
-        protected override void Handle(Response response)
+        protected void Handle(Response response)
         {
             if (response.ResponseType == ResponseTypeEnum.File)
             {
@@ -66,6 +66,16 @@ namespace EasyWebsite.Core.PageProcessor
                     return null;
             }
             return new FileStream(file, FileMode.Create);
+        }
+
+        public Response Send(Request request)
+        {
+
+        }
+
+        public Response SendAsync(Request request)
+        {
+            throw new NotImplementedException();
         }
     }
 

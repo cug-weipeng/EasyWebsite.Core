@@ -34,7 +34,7 @@ namespace EasyWebsite.Core
         public bool Login(string loginPath,string userJson)
         {
             _LoginUrl = loginPath;
-            NetworkClient netCenter = new NetworkClient() { AllowAutoRedirect = false };
+            HttpRequestClient netCenter = new HttpRequestClient() { AllowAutoRedirect = false };
             var response = netCenter.PostResponse(loginPath, userJson);
             if (response.Cookies.IsAspAuthenticate)
             {
@@ -46,7 +46,7 @@ namespace EasyWebsite.Core
         
         public void OpenPage(string url,IPageProcessor pageProcessor)
         {
-            NetworkClient netCenter = new NetworkClient() { AllowAutoRedirect = false };
+            HttpRequestClient netCenter = new HttpRequestClient() { AllowAutoRedirect = false };
             var response = netCenter.GetResponse();
 
         }

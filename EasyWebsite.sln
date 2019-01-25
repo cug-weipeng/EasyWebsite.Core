@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyWebsite.Core", "EasyWebsite.Core\EasyWebsite.Core.csproj", "{BD351030-0B77-4A32-9C04-C6A69B31F91C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyWebsite.ConsoleTest", "EasyWebsite.ConsoleTest\EasyWebsite.ConsoleTest.csproj", "{C53756EF-2D35-40EF-8311-EBBB9A5AA83F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyWebsite.Core", "EasyWebsite.Core\EasyWebsite.Core.csproj", "{BD351030-0B77-4A32-9C04-C6A69B31F91C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BD351030-0B77-4A32-9C04-C6A69B31F91C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD351030-0B77-4A32-9C04-C6A69B31F91C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD351030-0B77-4A32-9C04-C6A69B31F91C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD351030-0B77-4A32-9C04-C6A69B31F91C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C53756EF-2D35-40EF-8311-EBBB9A5AA83F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C53756EF-2D35-40EF-8311-EBBB9A5AA83F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C53756EF-2D35-40EF-8311-EBBB9A5AA83F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C53756EF-2D35-40EF-8311-EBBB9A5AA83F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD351030-0B77-4A32-9C04-C6A69B31F91C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD351030-0B77-4A32-9C04-C6A69B31F91C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD351030-0B77-4A32-9C04-C6A69B31F91C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD351030-0B77-4A32-9C04-C6A69B31F91C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

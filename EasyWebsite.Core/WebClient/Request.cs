@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace EasyWebsite.Core.WebClient
 {
-    internal class Request
+    public class Request
     {
+        public Request(RequestCommon common)
+        {
+            RequestCommon = common;
+        }
+        public RequestCommon RequestCommon { get; set; }
 
+        public Uri Url { get; set; }
+
+        public Uri Referer { get; set; }
+
+        public string Origin { get; set; }
     }
 }

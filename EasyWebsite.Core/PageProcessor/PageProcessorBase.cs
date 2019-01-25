@@ -10,13 +10,15 @@ namespace EasyWebsite.Core.PageProcessor
     public abstract class PageProcessorBase : IPageProcessor
     {
         public string Url { get; set; } 
-        public HttpMethod Method { get; set; }
-        private NetworkClient _HttpClient { get; set; } 
+        private HttpRequestClient _HttpClient { get; set; } 
 
-        public PageProcessorBase()
+        public IWebRequester Requester { get; set; }
+
+        public RequestCommon RequestPartial { get; set; }
+
+        public PageProcessorBase(IWebRequester requester)
         {
-            Method = HttpMethod.Get;
-            NetworkClient netCenter = new NetworkClient() { AllowAutoRedirect = false };
+            Requester = requester;
         }
 
         public void Process()
@@ -26,23 +28,29 @@ namespace EasyWebsite.Core.PageProcessor
 
         private void ProcessOnce(string url)
         {
-            Response response = WebRequest();
+            Request request = new Request(RequestPartial);
+            request.Url = new Uri(url);
+
+            Response response = Requester.Send(request);
             Handle(response);
-            if (NextPage.HasNextPage(response))
+
+            string nextPageUrl = GetNextPageUrl(response);
+            if (!string.IsNullOrWhiteSpace(nextPageUrl))
             {
-                ProcessOnce(NextPage.nextUrl);
+                ProcessOnce(nextPageUrl);
             }
         }
-
-        abstract protected Response WebRequest();
-
+        
         protected abstract void Handle(Response response);
 
-    }
-
-    public enum HttpMethod
-    {
-        Get = 0,
-        Post = 1
+        /// <summary>
+        /// 获取下一页的链接
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        protected virtual string GetNextPageUrl(Response response)
+        {
+            return null;
+        }
     }
 }
